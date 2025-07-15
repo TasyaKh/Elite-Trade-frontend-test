@@ -77,10 +77,7 @@ function close() {
 .modal {
   z-index: 101;
 }
-.modal-content {
-  max-height: 80vh;
-  overflow: auto;
-}
+
 .modal-header {
   position: sticky;
   top: 0;
