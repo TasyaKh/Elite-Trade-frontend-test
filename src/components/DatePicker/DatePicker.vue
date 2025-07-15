@@ -9,7 +9,7 @@
     locale="ru"
     auto-apply
     placeholder="Выбрать период"
-    @update:modelValue="(value) => $emit('update:modelValue', value)"
+    @update:modelValue="(value: [Date | null, Date | null]) => $emit('update:modelValue', value)"
   />
 </template>
 

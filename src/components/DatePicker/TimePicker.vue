@@ -8,7 +8,7 @@
       time-picker
       placeholder="Выберать время"
       locale="ru"
-      @update:modelValue="(value) => $emit('update:modelValue', value)"
+      @update:modelValue="(value: [Time | null, Time | null]) => $emit('update:modelValue', value)"
     />
   </div>
 </template>

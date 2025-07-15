@@ -56,7 +56,7 @@ import OrdersFilter from '@/components/OrdersFilters/OrdersFilter.vue'
 import ModalMinimal from '@/components/Modals/ModalMinimal.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
-import { format } from 'date-fns'
+import { format, setHours, setMinutes } from 'date-fns'
 import { normalizeQueryObject } from '@/utils/query/normalizeQueryObject'
 import { isTime } from '@/models/other/time'
 import OrdersTable from './OrdersTable.vue'
@@ -93,7 +93,8 @@ function formatValue(value: unknown): string | unknown {
     const formatString = 'dd.MM.yyyy'
     return format(value, formatString)
   } else if (isTime(value)) {
-    return `${value.hours}:${value.minutes}`
+    const date = setMinutes(setHours(new Date(), value.hours), value.minutes)
+    return format(date, 'HH:mm')
   }
 
   return value

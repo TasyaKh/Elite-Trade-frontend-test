@@ -82,6 +82,8 @@ onClickOutside(root, closeDropdown)
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
+
 .select-single {
   position: relative;
   width: 100%;
@@ -129,7 +131,7 @@ onClickOutside(root, closeDropdown)
 }
 
 .option:hover {
-  background-color: lighten($color-brand, 40%);
+  background-color: color.scale($color-brand, $lightness: 40%);
 }
 
 .no-results {
