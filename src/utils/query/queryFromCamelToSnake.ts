@@ -14,5 +14,6 @@ export const queryFromCamelToSnake = (obj: Record<string, unknown>): string => {
   return qs.stringify(snakeCaseObj, {
     encode: false,
     skipNulls: true,
+    arrayFormat: 'brackets',
   })
 }
