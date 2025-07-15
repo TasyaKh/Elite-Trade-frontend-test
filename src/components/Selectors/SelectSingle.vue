@@ -28,7 +28,6 @@
 import { ref, computed, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
-// Компонент props
 const props = defineProps<{
   items: Record<string, string | number | null>[]
   keyProp: string
@@ -73,10 +72,8 @@ function syncSearchWithModel() {
   search.value = selected ? String(selected[props.valueProp]) : ''
 }
 
-// При смене внешнего modelValue обновляем поиск
 watch(() => props.modelValue, syncSearchWithModel, { immediate: true })
 
-// Директива для клика вне компонента (в Vue 3 можно через useClickOutside или реализовать самостоятельно)
 const root = ref(null)
 onClickOutside(root, closeDropdown)
 </script>
@@ -115,7 +112,7 @@ onClickOutside(root, closeDropdown)
   background: white;
   box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
   overflow-y: auto;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .option {

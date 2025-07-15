@@ -24,10 +24,8 @@ const emit = defineEmits<{
   (e: 'addFilters', filters: OrdersFilterOption[]): void
 }>()
 
-// копия фильтров
 const localFilters = ref<OrdersFilterOption[]>([...props.filters])
 
-// обновляем локальные фильтры
 watch(
   () => props.filters,
   (newFilters) => {

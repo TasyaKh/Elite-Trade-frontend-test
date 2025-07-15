@@ -10,9 +10,11 @@
         Dropdown
       </button>
     </slot>
-    <ul class="dropdown-menu p-3 show" v-if="isOpen" @click.stop :style="menuStyle">
-      <slot name="menu" />
-    </ul>
+    <transition name="dropdown-fade">
+      <ul class="dropdown-menu p-3 show" v-if="isOpen" @click.stop :style="menuStyle">
+        <slot name="menu" />
+      </ul>
+    </transition>
   </div>
 </template>
 
@@ -61,5 +63,22 @@ const menuStyle = computed(() => (props.menuMinWidth ? { minWidth: props.menuMin
   top: 120%;
   transform: translateX(-50%);
   z-index: 1000;
+}
+/* Animation for dropdown */
+.dropdown-fade-enter-active,
+.dropdown-fade-leave-active {
+  transition:
+    opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dropdown-fade-enter-from,
+.dropdown-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+}
+.dropdown-fade-enter-to,
+.dropdown-fade-leave-from {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 </style>

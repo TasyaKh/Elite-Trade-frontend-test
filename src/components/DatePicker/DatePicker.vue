@@ -9,7 +9,7 @@
     locale="ru"
     auto-apply
     placeholder="Выбрать период"
-    @update:modelValue="(value: [Date | null, Date | null]) => $emit('update:modelValue', value)"
+    @update:modelValue="(value: Date[]) => $emit('update:modelValue', value)"
   />
 </template>
 
@@ -18,11 +18,11 @@ import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 defineProps<{
-  modelValue: Date[] | null
+  modelValue: Date[]
 }>()
 
 defineEmits<{
-  (e: 'update:modelValue', value: [Date | null, Date | null]): void
+  (e: 'update:modelValue', value: Date[]): void
 }>()
 </script>
 

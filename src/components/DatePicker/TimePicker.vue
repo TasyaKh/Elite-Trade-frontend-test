@@ -8,7 +8,7 @@
       time-picker
       placeholder="Выберать время"
       locale="ru"
-      @update:modelValue="(value: [Time | null, Time | null]) => $emit('update:modelValue', value)"
+      @update:modelValue="(value: Time[]) => $emit('update:modelValue', value)"
     />
   </div>
 </template>
@@ -19,11 +19,11 @@ import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 defineProps<{
-  modelValue: Time[] | null
+  modelValue: Time[]
 }>()
 
 defineEmits<{
-  (e: 'update:modelValue', value: [Time | null, Time | null]): void
+  (e: 'update:modelValue', value: Time[]): void
 }>()
 </script>
 

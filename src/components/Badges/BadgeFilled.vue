@@ -15,7 +15,7 @@ defineProps<{
   display: inline-block;
   padding: 0.25em 0.7em;
   border-radius: 6px;
-  background-color: #ececec;
+  background-color: #f0f0f0;
   font-size: 0.9rem;
 }
 </style>

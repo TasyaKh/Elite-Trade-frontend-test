@@ -77,6 +77,7 @@ import type { Order } from '@/models/orders/order'
 import { DeliveryStatus, PaymentMethod, DeliveryMethod } from '@/models/orders/order'
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { format } from 'date-fns'
 
 const props = defineProps<{
   orders: Order[]
@@ -85,7 +86,7 @@ const props = defineProps<{
 function formatDate(dateStr: string) {
   if (!dateStr) return ''
   const d = new Date(dateStr)
-  return d.toLocaleDateString('ru-RU')
+  return format(d, 'dd.MM.yyyy')
 }
 
 function paymentStatusBadgeType(status: DeliveryStatus) {
@@ -129,6 +130,13 @@ function deliveryMethodBadgeType(method: DeliveryMethod) {
 </script>
 
 <style scoped lang="scss">
+thead {
+  th {
+    background-color: rgba($color-brand, 0.7);
+    color: white;
+  }
+}
+
 th,
 td {
   width: auto;

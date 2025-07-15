@@ -20,9 +20,11 @@ function toggle() {
       <span>{{ title }}</span>
       <FontAwesomeIcon :icon="isOpen ? faChevronUp : faChevronDown" />
     </div>
-    <div v-show="isOpen" class="collapsible-body">
-      <slot />
-    </div>
+    <transition name="fade">
+      <div v-show="isOpen" class="collapsible-body">
+        <slot />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -45,5 +47,19 @@ function toggle() {
 .collapsible-body {
   padding: 12px 16px;
   border-top: 1px solid #eee;
+  overflow: hidden;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
 }
 </style>

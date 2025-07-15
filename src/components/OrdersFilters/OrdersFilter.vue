@@ -120,7 +120,7 @@
       <TextInput v-model="filters.phoneNumber" placeholder="Поиск..." :type="TextInputType.PHONE" />
     </template>
 
-    <div class="d-flex flex-wrap justify-content-between gap-4">
+    <div class="filter-actions-sticky d-flex flex-wrap justify-content-between gap-4">
       <button class="custom-btn-primary" @click="onApplyFilters">Применить</button>
       <button class="custom-btn-secondary outlined" @click="onResetFilters">Сбросить</button>
     </div>
@@ -176,17 +176,17 @@ onMounted(async () => {
   }
 })
 
-function onDeliveryDateRangeChange(val: [Date | null, Date | null]) {
+function onDeliveryDateRangeChange(val: Date[]) {
   filters.value.deliveryDateFrom = val[0]
   filters.value.deliveryDateTo = val[1]
 }
 
-function onOrderDateRangeChange(val: [Date | null, Date | null]) {
+function onOrderDateRangeChange(val: Date[]) {
   filters.value.orderDateFrom = val[0]
   filters.value.orderDateTo = val[1]
 }
 
-function onDeliveryTimeRangeChange(val: [Time | null, Time | null]) {
+function onDeliveryTimeRangeChange(val: Time[]) {
   filters.value.deliveryTimeFrom = val[0]
   filters.value.deliveryTimeTo = val[1]
 }
@@ -204,7 +204,7 @@ const onUpdateDeliveryMethod = (values: string[]) => {
 }
 
 const getManagersOptions = () => {
-  const managersOptions: { id: number | null; name: string }[] = []
+  const managersOptions: { id: number; name: string }[] = []
   managersOptions.push({ id: 0, name: 'Не задан' })
   managers.value.forEach((manager) => {
     managersOptions.push({ id: manager.id, name: manager.name })
@@ -212,3 +212,14 @@ const getManagersOptions = () => {
   return managersOptions
 }
 </script>
+
+<style scoped>
+.filter-actions-sticky {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  padding: 16px 0 8px 0;
+  z-index: 10;
+}
+</style>

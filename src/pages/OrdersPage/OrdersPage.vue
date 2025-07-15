@@ -1,21 +1,27 @@
 <template>
   <div class="container py-4">
+    <h1 class="my-4">Заказы</h1>
     <!-- modal filters -->
-    <ModalMinimal title="Фильтры" v-model:isOpen="isModalOpen">
-      <template #button="{ toggle }">
-        <button class="custom-btn-primary outlined small" @click="toggle">
-          <FontAwesomeIcon :icon="faFilter" /> Фильтры
-        </button>
-      </template>
-      <OrdersFilter
-        v-if="Object.keys(activeFilters).length > 0"
-        v-model="filterOrdersRequest"
-        :activeFilters="activeFilters"
-        @applyFilters="handleApplyFilters"
-        @resetFilters="handleResetFilters"
-      />
-      <div v-else class="alert alert-warning">Фильтры не заданы</div>
-    </ModalMinimal>
+    <div class="d-flex flex-wrap justify-content-between gap-3">
+      <ModalMinimal title="Фильтры" v-model:isOpen="isModalOpen">
+        <template #button="{ toggle }">
+          <button class="custom-btn-primary outlined small" @click="toggle">
+            <FontAwesomeIcon :icon="faFilter" /> Фильтры
+          </button>
+        </template>
+        <OrdersFilter
+          v-if="Object.keys(activeFilters).length > 0"
+          class="p-3"
+          v-model="filterOrdersRequest"
+          :activeFilters="activeFilters"
+          @applyFilters="handleApplyFilters"
+          @resetFilters="handleResetFilters"
+        />
+        <div v-else class="alert alert-warning">Фильтры не заданы</div>
+      </ModalMinimal>
+
+      <OrdersSatistic />
+    </div>
 
     <div class="d-flex flex-wrap my-4 gap-2">
       <!-- applied filter badges -->
@@ -57,11 +63,12 @@ import ModalMinimal from '@/components/Modals/ModalMinimal.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { format, setHours, setMinutes } from 'date-fns'
-import { normalizeQueryObject } from '@/utils/query/normalizeQueryObject'
 import { isTime } from '@/models/other/time'
 import OrdersTable from './OrdersTable.vue'
 import BadgeFilled from '@/components/Badges/BadgeFilled.vue'
 import { Orders } from '@/api/orders'
+import { queryFromCamelToSnake } from '@/utils/query/queryFromCamelToSnake'
+import OrdersSatistic from './OrdersSatistic.vue'
 
 const isModalOpen = ref(false)
 
@@ -121,7 +128,7 @@ function getAppliedFilterQueryObject(): Record<string, unknown> {
 
 const handleApplyFilters = () => {
   const rawQuery = getAppliedFilterQueryObject()
-  const queryString = normalizeQueryObject(rawQuery)
+  const queryString = queryFromCamelToSnake(rawQuery)
   const url = `${window.location.pathname}?${queryString}`
   window.history.replaceState({}, '', url)
   isModalOpen.value = false
