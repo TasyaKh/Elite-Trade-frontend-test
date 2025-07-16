@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { TextInputType } from '@/utils/enums/TextInputType'
+import { TextInputType } from '@/enums/TextInputType'
 import IMask from 'imask'
 import { onMounted, ref, watch, onBeforeUnmount } from 'vue'
 

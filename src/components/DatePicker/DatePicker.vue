@@ -1,6 +1,6 @@
 <template>
   <Datepicker
-    :model-value="modelValue"
+    v-model="model"
     :enable-time-picker="false"
     :time-picker-inline="true"
     :range="true"
@@ -9,7 +9,6 @@
     locale="ru"
     auto-apply
     placeholder="Выбрать период"
-    @update:modelValue="(value: Date[]) => $emit('update:modelValue', value)"
   />
 </template>
 
@@ -17,13 +16,7 @@
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
-defineProps<{
-  modelValue: Date[]
-}>()
-
-defineEmits<{
-  (e: 'update:modelValue', value: Date[]): void
-}>()
+const model = defineModel<Date[]>()
 </script>
 
 <style scoped lang="scss">

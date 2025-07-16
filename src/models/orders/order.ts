@@ -18,7 +18,7 @@ export enum DeliveryMethod {
   COURIER = 'Курьерская доставка',
 }
 
-export interface Order {
+export interface IOrder {
   orderNumber: string
   orderDate: string // ISO date string
   paid: boolean

@@ -1,15 +1,6 @@
 <template>
   <div class="dropdown" ref="dropdownRef">
-    <slot name="button" :toggle="toggleDropdown">
-      <button
-        class="btn btn-secondary dropdown-toggle"
-        type="button"
-        @click="toggleDropdown"
-        :aria-expanded="isOpen"
-      >
-        Dropdown
-      </button>
-    </slot>
+    <slot name="button" :toggle="toggleDropdown" />
     <transition name="dropdown-fade">
       <ul class="dropdown-menu p-3 show" v-if="isOpen" @click.stop :style="menuStyle">
         <slot name="menu" />
@@ -46,7 +37,6 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 
-// Compute the style for the menu
 const menuStyle = computed(() => (props.menuMinWidth ? { minWidth: props.menuMinWidth } : {}))
 </script>
 

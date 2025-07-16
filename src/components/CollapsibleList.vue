@@ -1,3 +1,17 @@
+<template>
+  <div class="collapsible-list">
+    <div class="collapsible-header" @click="toggle">
+      <span>{{ title }}</span>
+      <FontAwesomeIcon :icon="isOpen ? faChevronUp : faChevronDown" />
+    </div>
+    <transition name="fade">
+      <div v-show="isOpen" class="collapsible-body">
+        <slot />
+      </div>
+    </transition>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
@@ -13,20 +27,6 @@ function toggle() {
   isOpen.value = !isOpen.value
 }
 </script>
-
-<template>
-  <div class="collapsible-list">
-    <div class="collapsible-header" @click="toggle">
-      <span>{{ title }}</span>
-      <FontAwesomeIcon :icon="isOpen ? faChevronUp : faChevronDown" />
-    </div>
-    <transition name="fade">
-      <div v-show="isOpen" class="collapsible-body">
-        <slot />
-      </div>
-    </transition>
-  </div>
-</template>
 
 <style scoped>
 .collapsible-list {

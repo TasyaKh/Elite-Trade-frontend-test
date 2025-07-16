@@ -1,23 +1,10 @@
+import { FilterKey } from './filterKey'
 import type { IFilterOrdersRequest } from './filterOrdersRequest'
 
 export interface OrdersFilterOption {
   key: FilterKey
   label: string
   checked: boolean
-}
-
-export enum FilterKey {
-  DeliveryStatus = 'status',
-  DeliveryDate = 'deliveryDate',
-  Manager = 'manager',
-  OrderDate = 'orderDate',
-  Paid = 'paid',
-  PaymentMethod = 'paymentMethod',
-  DeliveryMethod = 'deliveryMethod',
-  Client = 'client',
-  OrderNumber = 'orderNumber',
-  PhoneNumber = 'phoneNumber',
-  DeliveryTime = 'deliveryTime',
 }
 
 export const defaultOrdersFilter: OrdersFilterOption[] = [

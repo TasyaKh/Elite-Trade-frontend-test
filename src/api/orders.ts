@@ -1,8 +1,8 @@
-import { DeliveryMethod, DeliveryStatus, PaymentMethod, type Order } from '@/models/orders/order'
+import { DeliveryMethod, DeliveryStatus, PaymentMethod, type IOrder } from '@/models/orders/order'
 
 export class Orders {
-  static async getOrders(): Promise<Order[]> {
-    const orders: Order[] = [
+  static async getOrders(): Promise<IOrder[]> {
+    const orders: IOrder[] = [
       {
         orderNumber: '1001',
         orderDate: '2024-06-01T10:00:00Z',

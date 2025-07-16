@@ -36,29 +36,15 @@
     </CollapsibleList>
 
     <!-- delivery date  -->
-    <template
-      v-if="
-        FilterKey.DeliveryDate in activeFilters &&
-        filters.deliveryDateFrom &&
-        filters.deliveryDateTo
-      "
-    >
+    <template v-if="FilterKey.DeliveryDate in activeFilters">
       <h6>Дата доставки</h6>
-      <DatePicker
-        :modelValue="[filters.deliveryDateFrom, filters.deliveryDateTo]"
-        @update:modelValue="onDeliveryDateRangeChange"
-      />
+      <DatePicker v-model="deliveryRange" />
     </template>
 
     <!-- order date -->
-    <template
-      v-if="FilterKey.OrderDate in activeFilters && filters.orderDateFrom && filters.orderDateTo"
-    >
+    <template v-if="FilterKey.OrderDate in activeFilters">
       <h6>Дата заказа</h6>
-      <DatePicker
-        :model-value="[filters.orderDateFrom, filters.orderDateTo]"
-        @update:modelValue="onOrderDateRangeChange"
-      />
+      <DatePicker v-model="orderDateRange" />
     </template>
 
     <!-- order date -->
@@ -80,7 +66,7 @@
     <template v-if="FilterKey.Paid in activeFilters">
       <h6>Оплачено</h6>
       <RadioBtnsGroup
-        :selectedValue="filters.paid ? 'true' : 'false'"
+        :selectedValue="String(filters.paid)"
         @update="(val) => (filters.paid = val === 'true')"
         :options="[
           { value: 'true', label: 'Да' },
@@ -140,15 +126,15 @@ import RadioBtnsGroup from '../Buttons/RadioBtnsGroup.vue'
 import TextInput from '../TextInput.vue'
 import TimePicker from '../DatePicker/TimePicker.vue'
 import { type IFilterOrdersRequest } from '@/models/orders/filterOrdersRequest'
-import { FilterKey } from '@/models/orders/defaultOrdersFilter'
 import type { ActiveFilters } from '@/pages/OrdersPage/OrdersPage.vue'
 import type { DeliveryMethod, PaymentMethod, DeliveryStatus } from '@/models/orders/order'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import SelectSingle from '../Selectors/SelectSingle.vue'
 import type { Time } from '@/models/other/time'
 import { Users } from '@/api/users'
-import { TextInputType } from '@/utils/enums/TextInputType'
+import { TextInputType } from '@/enums/TextInputType'
 import type { IUser } from '@/models/user'
+import { FilterKey } from '@/models/orders/filterKey'
 
 const props = defineProps<{
   activeFilters: ActiveFilters
@@ -176,15 +162,24 @@ onMounted(async () => {
   }
 })
 
-function onDeliveryDateRangeChange(val: Date[]) {
-  filters.value.deliveryDateFrom = val[0]
-  filters.value.deliveryDateTo = val[1]
-}
+const deliveryRange = computed({
+  get: () => [
+    filters.value.deliveryDateFrom ?? new Date(),
+    filters.value.deliveryDateTo ?? new Date(),
+  ],
+  set: ([from, to]: Date[]) => {
+    filters.value.deliveryDateFrom = from
+    filters.value.deliveryDateTo = to
+  },
+})
 
-function onOrderDateRangeChange(val: Date[]) {
-  filters.value.orderDateFrom = val[0]
-  filters.value.orderDateTo = val[1]
-}
+const orderDateRange = computed({
+  get: () => [filters.value.orderDateFrom ?? new Date(), filters.value.orderDateTo ?? new Date()],
+  set: ([from, to]: Date[]) => {
+    filters.value.orderDateFrom = from
+    filters.value.orderDateTo = to
+  },
+})
 
 function onDeliveryTimeRangeChange(val: Time[]) {
   filters.value.deliveryTimeFrom = val[0]

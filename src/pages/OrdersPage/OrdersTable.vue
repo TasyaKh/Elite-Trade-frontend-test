@@ -74,14 +74,14 @@
 
 <script setup lang="ts">
 import OutlinedBadge from '@/components/Badges/OutlinedBadge.vue'
-import type { Order } from '@/models/orders/order'
+import type { IOrder } from '@/models/orders/order'
 import { DeliveryStatus, PaymentMethod, DeliveryMethod } from '@/models/orders/order'
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { format } from 'date-fns'
 
 const props = defineProps<{
-  orders: Order[]
+  orders: IOrder[]
 }>()
 
 function formatDate(dateStr: string) {

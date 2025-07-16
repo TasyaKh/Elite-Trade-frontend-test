@@ -5,22 +5,22 @@
       v-model="search"
       class="search"
       placeholder="Поиск..."
-      @focus="openDropdown"
+      @focus="isDropdownOpen = true"
       @input="onInput"
       autocomplete="off"
     />
     <div v-if="isDropdownOpen && filteredItems.length" class="dropdown">
       <div
         v-for="item in filteredItems"
-        :key="String(item[props.keyProp] ?? '')"
+        :key="String(item[keyProp])"
         class="option"
-        :class="{ selected: item[props.keyProp] === modelValue }"
-        @mousedown.prevent="select(item[props.keyProp])"
+        :class="{ selected: item[keyProp] === model }"
+        @mousedown.prevent="select(item[keyProp])"
       >
-        {{ item[props.valueProp] }}
+        {{ item[valueProp] }}
       </div>
-      <div v-if="!filteredItems.length" class="no-results">Ничего не найдено</div>
     </div>
+    <div v-else-if="isDropdownOpen" class="no-results">Ничего не найдено</div>
   </div>
 </template>
 
@@ -28,54 +28,48 @@
 import { ref, computed, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
+type itemValue = string | number | null
+const model = defineModel<itemValue>()
+
 const props = defineProps<{
-  items: Record<string, string | number | null>[]
+  items: Record<string, itemValue>[]
   keyProp: string
   valueProp: string
-  modelValue: string | number | null
-}>()
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number | null): void
 }>()
 
 const search = ref('')
 const isDropdownOpen = ref(false)
 
-const filteredItems = computed(() => {
-  if (!search.value) return props.items
-  return props.items.filter((item) =>
-    String(item[props.valueProp]).toLowerCase().includes(search.value.toLowerCase()),
-  )
-})
-
-function openDropdown() {
-  isDropdownOpen.value = true
-}
-
-function closeDropdown() {
-  isDropdownOpen.value = false
-  syncSearchWithModel()
-}
+const filteredItems = computed(() =>
+  search.value.trim()
+    ? props.items.filter((item) =>
+        String(item[props.valueProp]).toLowerCase().includes(search.value.toLowerCase()),
+      )
+    : props.items,
+)
 
 function onInput(e: Event) {
   search.value = (e.target as HTMLInputElement).value
-  if (!isDropdownOpen.value) openDropdown()
+  if (!isDropdownOpen.value) isDropdownOpen.value = true
 }
 
-function select(val: string | number | null) {
-  emit('update:modelValue', val)
+function select(val: itemValue) {
+  model.value = val
   isDropdownOpen.value = false
 }
 
 function syncSearchWithModel() {
-  const selected = props.items.find((item) => item[props.keyProp] === props.modelValue)
+  const selected = props.items.find((item) => item[props.keyProp] === model.value)
   search.value = selected ? String(selected[props.valueProp]) : ''
 }
 
-watch(() => props.modelValue, syncSearchWithModel, { immediate: true })
+watch(() => model.value, syncSearchWithModel, { immediate: true })
 
 const root = ref(null)
-onClickOutside(root, closeDropdown)
+onClickOutside(root, () => {
+  isDropdownOpen.value = false
+  syncSearchWithModel()
+})
 </script>
 
 <style lang="scss" scoped>
@@ -134,6 +128,5 @@ onClickOutside(root, closeDropdown)
 .no-results {
   padding: 8px 12px;
   color: #999;
-  font-style: italic;
 }
 </style>

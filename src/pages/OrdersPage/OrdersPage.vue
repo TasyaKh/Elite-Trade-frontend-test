@@ -17,7 +17,7 @@
           @applyFilters="handleApplyFilters"
           @resetFilters="handleResetFilters"
         />
-        <div v-else class="alert alert-warning">Фильтры не заданы</div>
+        <div v-else class="alert alert-warning mx-3">Фильтры не заданы</div>
       </ModalMinimal>
 
       <OrdersSatistic />
@@ -25,7 +25,7 @@
 
     <div class="d-flex flex-wrap my-4 gap-2">
       <!-- applied filter badges -->
-      <BadgeFilled v-for="(label, key) in activeFilters" :key="key" :title="label" />
+      <FilledBadge v-for="(label, key) in activeFilters" :key="key" :title="label" />
 
       <!-- filters list -->
       <DropdownMenuTemplate :menuMinWidth="'200px'">
@@ -45,10 +45,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import OrdersFiltersList from '@/components/OrdersFilters/OrdersFiltersList.vue'
 import {
   defaultOrdersFilter,
-  FilterKey,
   filterKeyToPath,
   type OrdersFilterOption,
 } from '@/models/orders/defaultOrdersFilter'
@@ -57,24 +55,26 @@ import {
   getDefaultFilterOrdersRequest,
   type IFilterOrdersRequest,
 } from '@/models/orders/filterOrdersRequest'
-import { type Order } from '@/models/orders/order'
-import OrdersFilter from '@/components/OrdersFilters/OrdersFilter.vue'
+import { type IOrder } from '@/models/orders/order'
 import ModalMinimal from '@/components/Modals/ModalMinimal.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { format, setHours, setMinutes } from 'date-fns'
 import { isTime } from '@/models/other/time'
 import OrdersTable from './OrdersTable.vue'
-import BadgeFilled from '@/components/Badges/BadgeFilled.vue'
 import { Orders } from '@/api/orders'
 import { queryFromCamelToSnake } from '@/utils/query/queryFromCamelToSnake'
 import OrdersSatistic from './OrdersSatistic.vue'
+import FilledBadge from '@/components/Badges/FilledBadge.vue'
+import type { FilterKey } from '@/models/orders/filterKey'
+import OrdersFilter from '@/components/OrdersFilter/OrdersFilter.vue'
+import OrdersFiltersList from '@/components/OrdersFilter/OrdersFiltersList.vue'
 
 const isModalOpen = ref(false)
 
 export type ActiveFilters = Partial<Record<FilterKey, string>>
 
-const orders = ref<Order[]>([])
+const orders = ref<IOrder[]>([])
 const filters = ref<OrdersFilterOption[]>([...defaultOrdersFilter])
 const activeFilters = ref<ActiveFilters>({})
 
