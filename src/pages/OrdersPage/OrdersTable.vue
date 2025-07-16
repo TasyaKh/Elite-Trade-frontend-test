@@ -55,9 +55,10 @@
           </td>
           <!-- manager name -->
           <td>
-            <RouterLink :to="`/users/${order.manager.id}`">
+            <RouterLink v-if="order.manager" :to="`/users/${order.manager.id}`">
               {{ order.manager.name }}
             </RouterLink>
+            <div v-else>-</div>
           </td>
           <!-- delivery method -->
           <td>

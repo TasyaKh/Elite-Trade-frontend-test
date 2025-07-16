@@ -28,6 +28,6 @@ export interface Order {
   amount: number
   deliveryStatus: DeliveryStatus
   paymentMethod: PaymentMethod
-  manager: IUser
+  manager?: IUser
   deliveryMethod: DeliveryMethod
 }

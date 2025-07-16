@@ -1,11 +1,11 @@
 <template>
   <div class="orders-summary">
-    <span>
+    <div>
       Всего заказов: <b>{{ ordersCount }}</b>
-    </span>
-    <span class="ms-4">
+    </div>
+    <div class="d-flex justify-content-center flex-row">
       Сумма по всем заказам: <b>{{ formattedTotalAmount }}</b>
-    </span>
+    </div>
   </div>
 </template>
 
@@ -28,7 +28,6 @@ const formattedTotalAmount = computed(() =>
   font-size: 1.1rem;
   border-radius: 8px;
   background: #f8f9fa;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
   padding: 16px 24px;
   display: flex;
   flex-wrap: wrap;
@@ -36,8 +35,5 @@ const formattedTotalAmount = computed(() =>
   font-weight: 400;
   align-items: center;
   justify-content: center;
-}
-.orders-summary span {
-  white-space: pre-line;
 }
 </style>

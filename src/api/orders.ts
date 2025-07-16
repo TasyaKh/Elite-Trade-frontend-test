@@ -52,7 +52,7 @@ export class Orders {
         amount: 1500,
         deliveryStatus: DeliveryStatus.COLLECTED,
         paymentMethod: PaymentMethod.CASH,
-        manager: { id: 1, name: 'Иван Иванов', phone: '+7 123 456-78-90', email: '' },
+        manager: undefined,
         deliveryMethod: DeliveryMethod.PICKUP,
       },
       {
