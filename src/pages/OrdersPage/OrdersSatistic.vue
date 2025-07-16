@@ -3,7 +3,7 @@
     <div>
       Всего заказов: <b>{{ ordersCount }}</b>
     </div>
-    <div class="d-flex justify-content-center flex-row">
+    <div class="d-flex justify-content-center flex-row gap-1">
       Сумма по всем заказам: <b>{{ formattedTotalAmount }}</b>
     </div>
   </div>
